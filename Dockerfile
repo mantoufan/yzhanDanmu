@@ -46,4 +46,4 @@ RUN mv o/modules/opencv.so /usr/local/lib/php/extensions/no-debug-non-zts-201212
 RUN chmod 777 p/upload
 RUN wget http://cn2.php.net/get/php-5.5.31.tar.gz/from/this/mirror && tar xf mirror
 RUN cd php-5.5.31/ext/ftp && phpize && ./configure --with-php-config='/usr/local/bin/php-config' && make && make install && echo "extension=ftp.so" >> /usr/local/etc/php/php.ini && cd ../../.. && rm -r php-5.5.31 && rm -r mirror
-RUN wget https://raw.githubusercontent.com/mhjlw/up/master/log.php && chomd 777 log.php
+RUN wget https://raw.githubusercontent.com/mhjlw/up/master/log.php && chmod 777 log.php
