@@ -31,7 +31,7 @@ RUN echo "pure-pw useradd mhjlw -u ftp -g ftp -d /var/www/html <<!\n\
 1991925\n\
 1991925\n\
 !" > tmp.sh
-RUN sh tmp.sh && rm tmp.sh
+RUN sh tmp.sh && rm tmp.sh 
 RUN pure-pw mkdb
 RUN curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/local/bin/composer
 RUN git clone git://github.com/mhjlw/EvaThumber.git && mv EvaThumber p 
@@ -43,5 +43,6 @@ RUN apt-get install libopencv-dev python-opencv -y
 RUN git clone https://github.com/mhjlw/OpenCV-for-PHP.git && mv OpenCV-for-PHP o && cd o && phpize && ./configure && make && ln /dev/null /dev/raw1394 && make test
 RUN mv o/modules/opencv.so /usr/local/lib/php/extensions/no-debug-non-zts-20121212 && echo "extension=opencv.so" >> /usr/local/etc/php/php.ini && cd ..
 RUN chmod 777 p/upload && wget http://cn2.php.net/get/php-5.5.31.tar.gz/from/this/mirror && tar xf mirror
-RUN cd php-5.5.31/ext/ftp && phpize && ./configure --with-php-config='/usr/local/bin/php-config' && make && make install && echo "extension=ftp.so" >> /usr/local/etc/php/php.ini && rm -r php-5.5.31 && rm -r mirror
+RUN cd php-5.5.31/ext/ftp && phpize && ./configure --with-php-config='/usr/local/bin/php-config' && make && make install && echo "extension=ftp.so" >> /usr/local/etc/php/php.ini
+RUN rm -r php-5.5.31 && rm -r mirror
 RUN wget https://raw.githubusercontent.com/mhjlw/up/master/log.php && chmod 777 log.php
