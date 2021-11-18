@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YZhan barrage plug-in for native JS</title>
+    <link rel="stylesheet" href="./common.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="../dist/yzhandanmu.js"></script>
+    <script src="./common.js"></script>
+    <script>
+      const yZhanDanMu = new YZhanDanMu({ p: document.getElementById('app') })
+      setInterval(() => {
+        const o = document.createElement('DIV')
+        o.innerText = getRandomName(6 + ((Math.random() * 10) | 0))
+        o.style.fontSize = ((Math.random() * 24) | 0) + 12 + 'px'
+        o.style.color = randomHexColor()
+        yZhanDanMu.add(o, {
+          animations: {
+            'animation-duration': `${(96000 / o.innerText.length) | 0}ms`
+          }
+        })
+      }, 60)
+    </script>
+  </body>
+</html>

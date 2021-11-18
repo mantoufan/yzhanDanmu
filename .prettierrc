@@ -1,0 +1,6 @@
+trailingComma: "none"
+singleQuote: true
+jsxBracketSameLine: true
+semi: false
+printWidth: 100
+eslintIntegration: true

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YZhan barrage plug-in for React</title>
+    <link rel="stylesheet" href="./common.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="../dist/yzhandanmu.js"></script>
+    <script src="./common.js"></script>
+    <script type="text/babel">
+      'use strict'
+      const { createElement, useEffect, useRef } = React
+      function Page() {
+        const danmu = useRef(null)
+        useEffect(() => {
+          danmu.current = new YZhanDanMu({
+            p: document.getElementById('app')
+          })
+          setInterval(() => {
+            danmu.current.add(
+              ReactDOM.render(
+                <div
+                  style={{
+                    fontSize: ((Math.random() * 24) | 0) + 12 + 'px',
+                    color: randomHexColor()
+                  }}>
+                  {getRandomName(6 + ((Math.random() * 10) | 0))}
+                </div>,
+                document.createDocumentFragment()
+              )
+            )
+          }, 60)
+          return () => danmu.current.destroy()
+        })
+        return <div id="page"></div>
+      }
+      ReactDOM.render(React.createElement(Page), document.getElementById('app'))
+    </script>
+  </body>
+</html>
