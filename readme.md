@@ -40,10 +40,13 @@ const o = document.createElement('DIV')
 // React
 const o = ReactDOM.render(<div>Text</div>, document.createDocumentFragment())
 /** Step 3 添加弹幕到容器 */
-yZhanDanMu.add(o, { animations: {
-  'animation-duration': `20ms` // 弹幕持续时间
-  ... // 支持其它 animation 开头的 CSS 属性
-}}
+yZhanDanMu.add(o, {
+  animations: {
+    'animation-duration': `20ms` // 弹幕持续时间
+    ... // 支持其它 animation 开头的 CSS 属性
+  },
+  prior: 'time' // time 默认时间优先 nooverlap 不重叠优先(相应时间本应出现的弹幕会延迟出现)
+}
 /** Step 4 销毁 */
 yZhanDanMu.destroy()
 ```
