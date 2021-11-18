@@ -6,12 +6,47 @@
 
 ### 快速开始
 
+#### Node.js
+
+```shell
+npm i yzhandanmu
+```
+
+#### Browser
+
+引入 yzhandanmu.js 到 HTML 即可
+
+#### 演示
+
 您可以在 Demo 文件夹中，查看：
 
-- index.html 原生 js 示例
-- react.html React 示例
+- index.html 原生 js 示例  
+  Demo: https://mantoufan.github.io/yzhanDanmu/demo/
+- react.html React 示例  
+  Demo: https://mantoufan.github.io/yzhanDanmu/demo/react.html
 
 理论上，支持与任何框架搭配使用
+
+### API
+
+```javascript
+/** Step 1 初始化 */
+const yZhanDanMu = new YZhanDanMu({
+  p: document.getElementById('app') // 容器对象
+})
+/** Step 2 创建弹幕 */
+// 原生 JS
+const o = document.createElement('DIV')
+// React
+const o = ReactDOM.render(<div>Text</div>, document.createDocumentFragment())
+/** Step 3 添加弹幕到容器 */
+yZhanDanMu.add(o, { animations: {
+  'animation-duration': `20ms` // 弹幕持续时间
+  ... // 支持其它 animation 开头的 CSS 属性
+}}
+/** Step 4 销毁 */
+yZhanDanMu.destroy()
+```
 
 ### 功能特性
 
