@@ -1,6 +1,6 @@
 {
   "name": "yzhandanmu",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "bullet or barrage  plugin for javascript, Y站弹幕插件,任意高度,无极变速,通道算法受专利权保护",
   "main": "dist/yzhandanmu.js",
   "scripts": {

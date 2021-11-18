@@ -70,25 +70,28 @@ module.exports = class MTFWay {
     return b
   }
 
-  add(o) {
+  add(o, { prior = 'time' } = {}) {
     const { bpi, q, s, v } = this
     const p = v.id,
       oid = this.id(o)
     let t = false,
       h = o.offsetHeight,
       i = 0
-    while (t === false && i < 3) {
+    const max = prior === 'time' ? 3 : 1
+    while (t === false && i < max) {
       s.p = bpi(s.p, p, i)
       t = q([[v.top, v.bottom]], s.p[p][i], h)
       h = t + h
       i++
     }
-    i--
-    let bt = s.p[p][i][t],
-      bh = s.p[p][i][h]
-    s.p[p][i][t] = bt && bt == 2 ? 3 : 1
-    s.p[p][i][h] = bh && bh == 1 ? 3 : 2
-    s.o[oid] = [t, h, i, p]
+    if (t !== false) {
+      i--
+      let bt = s.p[p][i][t],
+        bh = s.p[p][i][h]
+      s.p[p][i][t] = bt && bt == 2 ? 3 : 1
+      s.p[p][i][h] = bh && bh == 1 ? 3 : 2
+      s.o[oid] = [t, h, i, p]
+    }
     return t
   }
 

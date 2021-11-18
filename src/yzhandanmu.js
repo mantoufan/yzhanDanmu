@@ -14,7 +14,7 @@ module.exports = class YZhanDanMu {
       mtfWay,
       cssList: {
         danmu: 'yzhan-danmu',
-        animations: {
+        animation: {
           rightToLeft: 'yzhan-right-to-left'
         }
       },
@@ -30,7 +30,15 @@ module.exports = class YZhanDanMu {
         },
         { root: p, threshold: 1 }
       ),
-      resetHeight: () => (mtfWay.v.bottom = p.offsetHeight)
+      resetHeight: () => (mtfWay.v.bottom = p.offsetHeight),
+      delay: {
+        queue: [],
+        interval: setInterval(() => {
+          if (this.delay.queue.length === 0) return
+          const { o, opt } = this.delay.queue.pop()
+          this.add(o, opt)
+        }, 500)
+      }
     })
     this.initCSS(p.id, p.offsetWidth)
     this.window?.addEventListener('resize', this.resetHeight)
@@ -42,7 +50,7 @@ module.exports = class YZhanDanMu {
     document.head.appendChild(style)
     const {
       danmu,
-      animations: { rightToLeft }
+      animation: { rightToLeft }
     } = cssList
     style.sheet.insertRule(`#${id} { position: relative }`, 0)
     style.sheet.insertRule(
@@ -55,13 +63,14 @@ module.exports = class YZhanDanMu {
     )
   }
 
-  add(o, { animations } = {}) {
-    const { p, mtfWay, cssList, observer } = this
+  add(o, opt = {}) {
+    const { p, mtfWay, cssList, observer, delay } = this
+    let { animations, prior = 'time' } = opt // time / nooverlap
     if (!o || !p) return
     if (o.id === void 0) o.id = 'yzhan_d_' + uid()
     const {
       danmu,
-      animations: { rightToLeft }
+      animation: { rightToLeft }
     } = cssList
     o.className = danmu
     animations = Object.assign(
@@ -73,7 +82,16 @@ module.exports = class YZhanDanMu {
     )
     for (const property in animations) o.style.setProperty(property, animations[property])
     p.appendChild(o)
-    o.style.top = mtfWay.add(o) + 'px'
+    let top = mtfWay.add(o, { prior })
+    if (top === false) {
+      if (prior === 'nooverlap') {
+        delay.queue.push({ o, opt })
+        p.removeChild(o)
+        return
+      }
+      top = 0
+    }
+    o.style.top = top + 'px'
     o.destroy = () => {
       observer.unobserve(o)
       mtfWay.remove(o)
@@ -92,12 +110,14 @@ module.exports = class YZhanDanMu {
     }
     observer.disconnect()
     window?.removeEventListener('resize', resetHeight)
+    clearInterval(this.delay.interval)
     Object.assign(this, {
       p: null,
       mtfWay: null,
       cssList: null,
       observer: null,
-      resetHeight: null
+      resetHeight: null,
+      delay: null
     })
   }
 }

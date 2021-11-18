@@ -21,7 +21,8 @@
         yZhanDanMu.add(o, {
           animations: {
             'animation-duration': `${(96000 / o.innerText.length) | 0}ms`
-          }
+          },
+          prior: 'time'
         })
       }, 60)
     </script>
