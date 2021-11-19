@@ -19,35 +19,40 @@
     <script type="text/babel">
       'use strict'
       const { createElement, useEffect, useRef } = React
+      let danmu = null
+      const add = (str) => {
+        const DanMu = window.styled.div`
+                border: ${str ? '1px solid white' : ''};
+                color: ${randomHexColor()};
+                font-size: ${((Math.random() * 0) | 0) + 36 + 'px'};
+                white-space: nowrap;
+              `
+        danmu.add(
+          ReactDOM.render(
+            <div>
+              <DanMu>{str || getRandomName(3 + ((Math.random() * 7) | 0))}</DanMu>
+            </div>,
+            document.createDocumentFragment()
+          ),
+          {
+            speed: 0.2,
+            prior: str ? 'nooverlap-highest' : 'nooverlap'
+          }
+        )
+      }
+      const Button = window.styled.button`
+        position: relative;
+        z-index: 1;
+      `
       function Page() {
-        const danmu = useRef(null)
         useEffect(() => {
-          danmu.current = new YZhanDanMu({
+          danmu = new YZhanDanMu({
             p: document.getElementById('app')
           })
-          setInterval(() => {
-            const PageInner = window.styled.div`
-              color: ${randomHexColor()};
-              font-size: ${((Math.random() * 24) | 0) + 12 + 'px'};
-            `
-            danmu.current.add(
-              ReactDOM.render(
-                <div>
-                  <PageInner>{getRandomName(6 + ((Math.random() * 10) | 0))}</PageInner>
-                </div>,
-                document.createDocumentFragment()
-              ),
-              {
-                animations: {
-                  'animation-duration': `5000ms`
-                },
-                prior: 'nooverlap'
-              }
-            )
-          }, 100)
+          setInterval(add, 200)
           return () => danmu.current.destroy()
         })
-        return null
+        return <Button onClick={add.bind(this, '用户弹幕')}>Add</Button>
       }
       ReactDOM.render(React.createElement(Page), document.getElementById('app'))
     </script>

@@ -18,30 +18,27 @@ module.exports = class YZhanDanMu {
           rightToLeft: 'yzhan-right-to-left'
         }
       },
-      observer: new IntersectionObserver(
-        (entries, observer) => {
-          entries.forEach(({ isIntersecting, target }) => {
-            if (isIntersecting) {
-              observer.unobserve(target)
-              mtfWay.remove(target)
-              clearTimeout(target.timeout)
-            }
-          })
-        },
-        { root: p, threshold: 1 }
-      ),
-      resetHeight: () => (mtfWay.v.bottom = p.offsetHeight),
       delay: {
         queue: [],
-        interval: setInterval(() => {
-          if (this.delay.queue.length === 0) return
-          const { o, opt } = this.delay.queue.pop()
-          this.add(o, opt)
-        }, 500)
+        queueRemove: [],
+        callback() {
+          const now = Date.now()
+          for(let i = this.delay.queueRemove.length; i--;) 
+            if (this.delay.queueRemove[i].expire < now) {
+              mtfWay.remove(this.delay.queueRemove[i])
+              this.delay.queueRemove.splice(i, 1)
+            }
+          if (this.delay.queue.length) {
+            this.add.apply(this, this.delay.queue.shift())
+            if (this.delay.queue.length > 50) this.delay.queue.splice(1, 25)
+          }
+          this.delay.requestId = requestAnimationFrame(this.delay.callback)
+        }
       }
     })
+    this.delay.callback = this.delay.callback.bind(this)
+    this.delay.requestId = requestAnimationFrame(this.delay.callback)
     this.initCSS(p.id, p.offsetWidth)
-    this.window?.addEventListener('resize', this.resetHeight)
   }
 
   initCSS(id, width) {
@@ -54,7 +51,7 @@ module.exports = class YZhanDanMu {
     } = cssList
     style.sheet.insertRule(`#${id} { position: relative }`, 0)
     style.sheet.insertRule(
-      `.${danmu} { position: absolute; right: 0; animation-timing-function: linear; animation-fill-mode: forwards; }`,
+      `.${danmu} { position: absolute; top: -1000vh; right: 0;  animation-timing-function: linear; animation-fill-mode: forwards }`,
       0
     )
     style.sheet.insertRule(
@@ -64,8 +61,8 @@ module.exports = class YZhanDanMu {
   }
 
   add(o, opt = {}) {
-    const { p, mtfWay, cssList, observer, delay } = this
-    let { animations, prior = 'time' } = opt // time / nooverlap
+    const { p, mtfWay, cssList, delay } = this
+    let { duration = '5000', prior = 'time', speed } = opt // time / nooverlap
     if (!o || !p) return
     if (o.id === void 0) o.id = 'yzhan_d_' + uid()
     const {
@@ -73,51 +70,32 @@ module.exports = class YZhanDanMu {
       animation: { rightToLeft }
     } = cssList
     o.className = danmu
-    animations = Object.assign(
-      {
-        'animation-name': rightToLeft,
-        'animation-duration': '5s'
-      },
-      animations
-    )
-    for (const property in animations) o.style.setProperty(property, animations[property])
     p.appendChild(o)
     let top = mtfWay.add(o, { prior })
     if (top === false) {
-      if (prior === 'nooverlap') {
-        delay.queue.push({ o, opt })
+      if (prior === 'nooverlap') delay.queue.push([o, opt])
+      else if (prior === 'nooverlap-highest') delay.queue.unshift([o, opt])
+      if (prior !== 'time') {
         p.removeChild(o)
         return
       }
       top = 0
     }
+    if (speed) duration = ((p.offsetWidth + o.offsetWidth) / speed) | 0
+    o.expire = Date.now() + ((duration * o.offsetWidth) / (o.offsetWidth + p.offsetWidth) | 0)
+    delay.queueRemove.push(o)
     o.style.top = top + 'px'
+    o.style.animationDuration = duration + 'ms'
+    o.style.animationName = rightToLeft
     o.destroy = () => {
-      observer.unobserve(o)
-      mtfWay.remove(o)
       p.removeChild(o)
+      o.removeEventListener('animationend ', o.destroy)
     }
     o.addEventListener('animationend', o.destroy)
-    observer.observe(o)
   }
 
   destroy() {
-    const { p, resetHeight, observer } = this
-    for (let i = 0; i < p.children.length; i++) {
-      const o = p.children[i]
-      o.removeEventListener('animationend', o.destroy)
-      o.destroy()
-    }
-    observer.disconnect()
-    window?.removeEventListener('resize', resetHeight)
-    clearInterval(this.delay.interval)
-    Object.assign(this, {
-      p: null,
-      mtfWay: null,
-      cssList: null,
-      observer: null,
-      resetHeight: null,
-      delay: null
-    })
+    for (let i = this.p.children.length; i--; ) this.p.children[i].destroy()
+    cancelAnimationFrame(this.delay.requestId)
   }
 }

@@ -18,11 +18,10 @@
         o.innerText = getRandomName(6 + ((Math.random() * 10) | 0))
         o.style.fontSize = ((Math.random() * 24) | 0) + 12 + 'px'
         o.style.color = randomHexColor()
+        o.style.whiteSpace = 'nowrap'
         yZhanDanMu.add(o, {
-          animations: {
-            'animation-duration': `${(96000 / o.innerText.length) | 0}ms`
-          },
-          prior: 'time'
+          speed: 0.3,
+          prior: 'nooverlap'
         })
       }, 60)
     </script>

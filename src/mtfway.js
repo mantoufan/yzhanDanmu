@@ -19,42 +19,34 @@ module.exports = class MTFWay {
   }
 
   q(a, g, h) {
-    for (let i = 0, p; (p = a[i]), i < a.length; i++) {
-      const c = [],
-        e = Math.min(p[0], p[1]),
-        f = Math.max(p[0], p[1])
+    for (let i = 0; i < a.length; i++) {
+      const e = Math.min(a[i][0], a[i][1]),
+        f = Math.max(a[i][0], a[i][1])
       let m
-      if (!g[e]) g[e] = 2
-      if (!g[f]) g[f] = 1
-      for (var k in g) {
-        if (k >= e && k <= f) {
-          c.push([k, g[k]])
-        }
-      }
-      c.sort((x, y) => x[0] - y[0])
-      delete g[e]
-      delete g[f]
-      const l = c.length
-      if (p[1] >= p[0]) {
-        for (let j = 0, d; (d = c[j]), j < l; j++) {
+      g[e] = 2
+      g[f] = 1
+      const c = Object.entries(g)
+      if (c.length > 27) return false
+      if (a[i][1] >= a[i][0]) {
+        for (let j = 0, d; (d = c[j]), j < c.length; j++) {
           if (d[1] == 2) {
             m = d[0]
           } else if (d[1] == 1) {
             if (m) {
               if (d[0] - m >= h) {
-                return parseFloat(m)
+                return m | 0
               }
             }
           }
         }
       } else {
-        for (let j = l - 1, d; (d = c[j]), j > -1; j--) {
+        for (let j = c.length, d; (d = c[j]), j--; ) {
           if (d[1] == 1) {
             m = d[0]
           } else if (d[1] == 2) {
             if (m) {
               if (m - d[0] >= h) {
-                return parseFloat(m - h)
+                return (m - h) | 0
               }
             }
           }

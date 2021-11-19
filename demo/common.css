@@ -1,6 +1,7 @@
 body {
   margin: 0;
   background-color: #efefef;
+  overflow-x: hidden;
 }
 #app {
   background-color: #333;
