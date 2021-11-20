@@ -18,8 +18,9 @@
     <script src="./common.js"></script>
     <script type="text/babel">
       'use strict'
-      const { createElement, useEffect, useRef } = React
-      let danmu = null
+      const { createElement, useEffect } = React
+      let yZhanDanMu = null
+      let timer = null
       const add = (str, prior = 'nooverlap') => {
         const DanMu = window.styled.div`
                 border: ${str ? '1px solid white' : ''};
@@ -27,7 +28,7 @@
                 font-size: 36px;
                 white-space: nowrap;
               `
-        danmu.add(
+        yZhanDanMu.add(
           ReactDOM.render(
             <div>
               <DanMu>{str || getRandomName(3 + ((Math.random() * 7) | 0))}</DanMu>
@@ -46,11 +47,14 @@
       `
       function Page() {
         useEffect(() => {
-          danmu = new YZhanDanMu({
+          yZhanDanMu = new YZhanDanMu({
             p: document.getElementById('app')
           })
-          setInterval(add, 200)
-          return () => danmu.current.destroy()
+          timer = setInterval(add, 200)
+          return () => {
+            clearInterval(timer)
+            yZhanDanMu.destroy()
+          }
         })
         return <div>
           <Button onClick={add.bind(this, '用户弹幕：不重叠优先之最高优先级', 'nooverlap-highest')}>Add：nooverlap-highest</Button>

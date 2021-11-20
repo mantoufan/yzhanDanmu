@@ -4,12 +4,13 @@
 
 ![Y 站弹幕插件预览图 Y station barrage plug-in Preivew GIF](https://i.loli.net/2021/11/20/3YGOFEWnNkcLyxV.gif)
 
-### Quick start 快速开始
+### Quick Start 快速开始
 
 #### Node.js
 
-```shell
+```javascript
 npm i yzhandanmu
+import YZhanDanMu from 'yzhandanmu'
 ```
 
 #### Browser
@@ -47,7 +48,7 @@ yZhanDanMu.add(o, {
   1. time - Barrage will appear on time, even if it overlaps
   2. nooverlap - Barrage will be delayed until a space is available
   3. nooverlap-highest - Barrage will be delayed until a space is available as soon as possible
-                */
+  */
 }
 /** Step 4 destroy */
 yZhanDanMu.destroy()
@@ -64,7 +65,7 @@ yZhanDanMu.destroy()
 - Automatic power saving 自动省电
   - On devices that support automatic power saving, when the current window is not active, slow down or stop running 支持自动省电的设备上，当前窗口不活跃时，降速或停止运行
 
-### Patent right 专利权
+### Patent Right 专利权
 
 The application channel algorithm of the plug-in has obtained the patent right of Chinese invention and is under protection  
 本插件应用通道算法已获得中国发明专利权，正处于保护期间

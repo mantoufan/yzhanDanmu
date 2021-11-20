@@ -1,5 +1,10 @@
 import MTFWay from './mtfway'
 const uid = () => Math.random().toString(36).slice(-6)
+const swap = (a, i, j) => {
+  const t = a[i]
+  a[i] = a[j]
+  a[j] = t
+}
 module.exports = class YZhanDanMu {
   constructor({ p }) {
     if (p.id === void 0) p.id = 'yzhan_p_' + uid()
@@ -18,33 +23,36 @@ module.exports = class YZhanDanMu {
           rightToLeft: 'yzhan-right-to-left'
         }
       },
-      delay: {
-        queue: [],
-        queueIn: [],
-        queueOut: [],
-        callback() {
-          const now = Date.now()
-          for(let i = this.delay.queueIn.length; i--;) 
-            if (this.delay.queueIn[i].expireIn < now) {
-              mtfWay.remove(this.delay.queueIn[i])
-              this.delay.queueOut.push(this.delay.queueIn[i])
-              this.delay.queueIn.splice(i, 1)
-            }
-          for(let i = this.delay.queueOut.length; i--;) 
-            if (this.delay.queueOut[i].expireOut < now) {
-              this.p.removeChild(this.delay.queueOut[i])
-              this.delay.queueOut.splice(i, 1)
-            }
-          if (this.delay.queue.length) {
-            this.add.apply(this, this.delay.queue.shift())
-            if (this.delay.queue.length > 50) this.delay.queue.splice(1, 25)
+      queueDelay: [],
+      queueIn: [],
+      queueOut: [],
+      callback() {
+        const { p, add, queueIn, queueOut, queueDelay } = this
+        const now = Date.now()
+        let end = queueIn.length
+        for(let i = end; i--;) 
+          if (queueIn[i].expireIn < now) {
+            mtfWay.remove(queueIn[i])
+            queueOut.push(queueIn[i])
+            swap(queueIn, i, --end)
           }
-          this.delay.requestId = requestAnimationFrame(this.delay.callback)
+        queueIn.length = end
+        end = queueOut.length
+        for(let i = end; i--;) 
+          if (queueOut[i].expireOut < now) {
+            p.removeChild(queueOut[i])
+            swap(queueOut, i, --end)
+          }
+        queueOut.length = end
+        if (queueDelay.length) {
+          add.apply(this, queueDelay.shift())
+          if (queueDelay.length > 50) queueDelay.splice(1, 25)
         }
+        this.requestId = requestAnimationFrame(this.callback)
       }
     })
-    this.delay.callback = this.delay.callback.bind(this)
-    this.delay.requestId = requestAnimationFrame(this.delay.callback)
+    this.callback = this.callback.bind(this)
+    this.requestId = requestAnimationFrame(this.callback)
     this.initCSS(p.id, p.offsetWidth)
   }
 
@@ -68,7 +76,7 @@ module.exports = class YZhanDanMu {
   }
 
   add(o, opt = {}) {
-    const { p, mtfWay, cssList, delay } = this
+    const { p, mtfWay, cssList, queueDelay, queueIn } = this
     let { duration = '5000', prior = 'time', speed } = opt // time / nooverlap
     if (!o || !p) return
     if (o.id === void 0) o.id = 'yzhan_d_' + uid()
@@ -80,8 +88,8 @@ module.exports = class YZhanDanMu {
     p.appendChild(o)
     let top = mtfWay.add(o, { prior })
     if (top === false) {
-      if (prior === 'nooverlap') delay.queue.push([o, opt])
-      else if (prior === 'nooverlap-highest') delay.queue.unshift([o, opt])
+      if (prior === 'nooverlap') queueDelay.push([o, opt])
+      else if (prior === 'nooverlap-highest') queueDelay.unshift([o, opt])
       if (prior !== 'time') {
         p.removeChild(o)
         return
@@ -91,14 +99,14 @@ module.exports = class YZhanDanMu {
     if (speed) duration = ((p.offsetWidth + o.offsetWidth) / speed) | 0
     o.expireIn = Date.now() + ((duration * o.offsetWidth) / (o.offsetWidth + p.offsetWidth) | 0)
     o.expireOut = Date.now() + duration
-    delay.queueIn.push(o)
+    queueIn.push(o)
     o.style.top = top + 'px'
     o.style.animationDuration = duration + 'ms'
     o.style.animationName = rightToLeft
   }
 
   destroy() {
+    cancelAnimationFrame(this.requestId)
     for (let i = this.p.children.length; i--; ) this.p.removeChild(this.p.children[i])
-    cancelAnimationFrame(this.delay.requestId)
   }
 }

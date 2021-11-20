@@ -26,7 +26,7 @@ module.exports = class MTFWay {
       g[e] = 2
       g[f] = 1
       const c = Object.entries(g)
-      if (c.length > 28) return false
+      if (c.length > 26) return false
       if (a[i][1] >= a[i][0]) {
         for (let j = 0, d; (d = c[j]), j < c.length; j++) {
           if (d[1] == 2) {
