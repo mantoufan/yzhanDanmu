@@ -20,13 +20,20 @@ module.exports = class YZhanDanMu {
       },
       delay: {
         queue: [],
-        queueRemove: [],
+        queueIn: [],
+        queueOut: [],
         callback() {
           const now = Date.now()
-          for(let i = this.delay.queueRemove.length; i--;) 
-            if (this.delay.queueRemove[i].expire < now) {
-              mtfWay.remove(this.delay.queueRemove[i])
-              this.delay.queueRemove.splice(i, 1)
+          for(let i = this.delay.queueIn.length; i--;) 
+            if (this.delay.queueIn[i].expireIn < now) {
+              mtfWay.remove(this.delay.queueIn[i])
+              this.delay.queueOut.push(this.delay.queueIn[i])
+              this.delay.queueIn.splice(i, 1)
+            }
+          for(let i = this.delay.queueOut.length; i--;) 
+            if (this.delay.queueOut[i].expireOut < now) {
+              this.p.removeChild(this.delay.queueOut[i])
+              this.delay.queueOut.splice(i, 1)
             }
           if (this.delay.queue.length) {
             this.add.apply(this, this.delay.queue.shift())
@@ -82,20 +89,16 @@ module.exports = class YZhanDanMu {
       top = 0
     }
     if (speed) duration = ((p.offsetWidth + o.offsetWidth) / speed) | 0
-    o.expire = Date.now() + ((duration * o.offsetWidth) / (o.offsetWidth + p.offsetWidth) | 0)
-    delay.queueRemove.push(o)
+    o.expireIn = Date.now() + ((duration * o.offsetWidth) / (o.offsetWidth + p.offsetWidth) | 0)
+    o.expireOut = Date.now() + duration
+    delay.queueIn.push(o)
     o.style.top = top + 'px'
     o.style.animationDuration = duration + 'ms'
     o.style.animationName = rightToLeft
-    o.destroy = () => {
-      p.removeChild(o)
-      o.removeEventListener('animationend ', o.destroy)
-    }
-    o.addEventListener('animationend', o.destroy)
   }
 
   destroy() {
-    for (let i = this.p.children.length; i--; ) this.p.children[i].destroy()
+    for (let i = this.p.children.length; i--; ) this.p.removeChild(this.p.children[i])
     cancelAnimationFrame(this.delay.requestId)
   }
 }

@@ -20,11 +20,11 @@
       'use strict'
       const { createElement, useEffect, useRef } = React
       let danmu = null
-      const add = (str) => {
+      const add = (str, prior = 'nooverlap') => {
         const DanMu = window.styled.div`
                 border: ${str ? '1px solid white' : ''};
                 color: ${randomHexColor()};
-                font-size: ${((Math.random() * 0) | 0) + 36 + 'px'};
+                font-size: 36px;
                 white-space: nowrap;
               `
         danmu.add(
@@ -36,7 +36,7 @@
           ),
           {
             speed: 0.2,
-            prior: str ? 'nooverlap-highest' : 'nooverlap'
+            prior
           }
         )
       }
@@ -52,7 +52,11 @@
           setInterval(add, 200)
           return () => danmu.current.destroy()
         })
-        return <Button onClick={add.bind(this, '用户弹幕')}>Add</Button>
+        return <div>
+          <Button onClick={add.bind(this, '用户弹幕：不重叠优先之最高优先级', 'nooverlap-highest')}>Add：nooverlap-highest</Button>
+          <Button onClick={add.bind(this, '用户弹幕：不重叠优先', 'nooverlap')}>Add：nooverlap</Button>
+          <Button onClick={add.bind(this, '用户弹幕：时间优先', 'time')}>Add：time</Button>
+        </div>
       }
       ReactDOM.render(React.createElement(Page), document.getElementById('app'))
     </script>
