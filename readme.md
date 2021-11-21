@@ -6,7 +6,7 @@ Y站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不�
 Y station barrage plug-in, suitable for barrages of any height, length and speed, CSS 3 animation, 11KB size, compatible with most devices.
 ### Preview 预览 
 
-![Y 站弹幕插件预览图 Y station barrage plug-in Preivew GIF](https://i.loli.net/2021/11/20/3YGOFEWnNkcLyxV.gif)
+![Y 站弹幕插件预览图 Y station barrage plug-in Preivew GIF](https://files.catbox.moe/2cg33c.gif)
 
 ### Quick Start 快速开始
 
