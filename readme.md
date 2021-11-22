@@ -1,10 +1,12 @@
 ## Y 站弹幕插件 Y station barrage plug-in
+
 ![npm](https://img.shields.io/npm/v/yzhandanmu)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/yzhandanmu)
 ![npm](https://img.shields.io/npm/dt/yzhandanmu)  
-Y站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略，CSS 3 动画，高效极简(11KB)，兼容绝大多数设备。  
+Y 站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略，CSS 3 动画，高效极简(11KB)，兼容绝大多数设备。  
 Y station barrage plug-in, suitable for barrages of any height, length and speed, CSS 3 animation, 11KB size, compatible with most devices.
-### Preview 预览 
+
+### Preview 预览
 
 ![Y 站弹幕插件预览图 Y station barrage plug-in Preivew GIF](https://files.catbox.moe/2cg33c.gif)
 
@@ -27,10 +29,10 @@ import YZhanDanMu from 'yzhandanmu'
 
 - index.html Native Javascipt
   Demo: https://mantoufan.github.io/yzhanDanmu/demo/
-- react.html React
+- react.html React with styled-components
   Demo: https://mantoufan.github.io/yzhanDanmu/demo/react.html
 
-It could be used with any JS / TS Library
+It could be used with any JS / TS Library 可以与任意 JS 和 TS 库搭配使用
 
 ### API
 
@@ -42,13 +44,14 @@ const yZhanDanMu = new YZhanDanMu({
 /** Step 2 Create Barrage */
 // Native JS
 const o = document.createElement('DIV')
+o.innerText = 'Text'
 // React
 const o = ReactDOM.render(<div>Text</div>, document.createDocumentFragment())
 /** Step 3 Add Barrage to the container */
 yZhanDanMu.add(o, {
   duration: 2000, // ms，Barrage display time
   speed: .2, // px / ms, Barrage display speed, it will override the duration, keep barrages of different lengths at the same speed
-  prior: 'time' /** Display strategy of new barrage when Barrage is full: 
+  prior: 'time' /** Display strategy of new barrage when Barrage is full:
   1. time - Barrage will appear on time, even if it overlaps
   2. nooverlap - Barrage will be delayed until a space is available
   3. nooverlap-highest - Barrage will be delayed until a space is available as soon as possible
