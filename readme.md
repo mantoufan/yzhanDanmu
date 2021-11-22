@@ -27,9 +27,9 @@ import YZhanDanMu from 'yzhandanmu'
 
 #### Demo 演示
 
-- index.html Native Javascipt
+- Native Javascipt
   Demo: https://mantoufan.github.io/yzhanDanmu/demo/
-- react.html React with styled-components
+- React with styled-components
   Demo: https://mantoufan.github.io/yzhanDanmu/demo/react.html
 
 It could be used with any JS / TS Library 可以与任意 JS 和 TS 库搭配使用
