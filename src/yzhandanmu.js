@@ -46,10 +46,7 @@ module.exports = class YZhanDanMu {
         queueOut.length = end
         if (queueDelay.length) {
           add.apply(this, queueDelay.shift())
-          if (queueDelay.length > 50) {
-            swap(queueDelay, 0, queueDelay.length - 25)
-            queueDelay = queueDelay.slice(-25)
-          }
+          if (queueDelay.length > 50) queueDelay.splice(1, queueDelay.length - 25)
         }
         this.requestId = requestAnimationFrame(this.callback)
       }
