@@ -27,10 +27,10 @@ module.exports = class YZhanDanMu {
       queueIn: [],
       queueOut: [],
       callback() {
-        const { p, add, queueIn, queueOut, queueDelay } = this
+        let { p, add, queueIn, queueOut, queueDelay } = this
         const now = Date.now()
         let end = queueIn.length
-        for(let i = end; i--;) 
+        for (let i = end; i--; )
           if (queueIn[i].expireIn < now) {
             mtfWay.remove(queueIn[i])
             queueOut.push(queueIn[i])
@@ -38,7 +38,7 @@ module.exports = class YZhanDanMu {
           }
         queueIn.length = end
         end = queueOut.length
-        for(let i = end; i--;) 
+        for (let i = end; i--; )
           if (queueOut[i].expireOut < now) {
             p.removeChild(queueOut[i])
             swap(queueOut, i, --end)
@@ -46,7 +46,10 @@ module.exports = class YZhanDanMu {
         queueOut.length = end
         if (queueDelay.length) {
           add.apply(this, queueDelay.shift())
-          if (queueDelay.length > 50) queueDelay.splice(1, 25)
+          if (queueDelay.length > 50) {
+            swap(queueDelay, 0, queueDelay.length - 25)
+            queueDelay = queueDelay.slice(-25)
+          }
         }
         this.requestId = requestAnimationFrame(this.callback)
       }
@@ -66,7 +69,7 @@ module.exports = class YZhanDanMu {
     } = cssList
     style.sheet.insertRule(`#${id} { position: relative }`, 0)
     style.sheet.insertRule(
-      `.${danmu} { position: absolute; top: -1000vh; right: 0;  animation-timing-function: linear; animation-fill-mode: forwards }`,
+      `.${danmu} { position: absolute; top: -1000vh; right: 0; animation-timing-function: linear; animation-fill-mode: backwards; }`,
       0
     )
     style.sheet.insertRule(
@@ -97,7 +100,7 @@ module.exports = class YZhanDanMu {
       top = 0
     }
     if (speed) duration = ((p.offsetWidth + o.offsetWidth) / speed) | 0
-    o.expireIn = Date.now() + ((duration * o.offsetWidth) / (o.offsetWidth + p.offsetWidth) | 0)
+    o.expireIn = Date.now() + (((duration * o.offsetWidth) / (o.offsetWidth + p.offsetWidth)) | 0)
     o.expireOut = Date.now() + duration
     queueIn.push(o)
     o.style.top = top + 'px'

@@ -56,11 +56,18 @@
             yZhanDanMu.destroy()
           }
         })
-        return <div>
-          <Button onClick={add.bind(this, '用户弹幕：不重叠优先之最高优先级', 'nooverlap-highest')}>Add：nooverlap-highest</Button>
-          <Button onClick={add.bind(this, '用户弹幕：不重叠优先', 'nooverlap')}>Add：nooverlap</Button>
-          <Button onClick={add.bind(this, '用户弹幕：时间优先', 'time')}>Add：time</Button>
-        </div>
+        return (
+          <div>
+            <Button
+              onClick={add.bind(this, '用户弹幕：不重叠优先之最高优先级', 'nooverlap-highest')}>
+              Add：nooverlap-highest
+            </Button>
+            <Button onClick={add.bind(this, '用户弹幕：不重叠优先', 'nooverlap')}>
+              Add：nooverlap
+            </Button>
+            <Button onClick={add.bind(this, '用户弹幕：时间优先', 'time')}>Add：time</Button>
+          </div>
+        )
       }
       ReactDOM.render(React.createElement(Page), document.getElementById('app'))
     </script>
