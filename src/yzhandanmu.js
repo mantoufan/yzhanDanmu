@@ -66,7 +66,7 @@ module.exports = class YZhanDanMu {
     } = cssList
     style.sheet.insertRule(`#${id} { position: relative }`, 0)
     style.sheet.insertRule(
-      `.${danmu} { position: absolute; top: -1000vh; right: 0; animation-timing-function: linear; animation-fill-mode: backwards; }`,
+      `.${danmu} { position: absolute; top: -1000vh; right: 0; animation-timing-function: linear; animation-fill-mode: forwards; }`,
       0
     )
     style.sheet.insertRule(

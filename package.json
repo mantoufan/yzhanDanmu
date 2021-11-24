@@ -1,6 +1,6 @@
 {
   "name": "yzhandanmu",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Y站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略，CSS 3 动画，高效极简(11KB)，兼容绝大多数设备。通道算法受专利权保护。Y station barrage plug-in, suitable for barrages of any height, length and speed, CSS 3 animation, 11KB size, compatible with most devices. The channel algorithm is protected by patent.",
   "main": "dist/yzhandanmu.js",
   "scripts": {
