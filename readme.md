@@ -3,8 +3,11 @@
 ![npm](https://img.shields.io/npm/v/yzhandanmu)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/yzhandanmu)
 ![npm](https://img.shields.io/npm/dt/yzhandanmu)  
-Y 站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略，CSS 3 动画，高效极简(11KB)，兼容绝大多数设备。  
-Y station barrage plug-in, suitable for barrages of any height, length and speed, CSS 3 animation, 11KB size, compatible with most devices.
+![ie10+](https://img.shields.io/badge/IE-10%2B-skyblue)  
+Y 站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略  
+CSS 3 动画，高效极简(2kB)，兼容绝大多数设备和 IE10+   
+Y station barrage plug-in, suitable for barrages of any height, length and speed  
+CSS 3 animation, 2kB size, compatible with most devices and IE10+
 
 ### Preview 预览
 

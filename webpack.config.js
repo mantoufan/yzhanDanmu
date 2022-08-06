@@ -6,6 +6,7 @@ module.exports = {
     path: resolve('dist'),
     library: 'YZhanDanMu',
     libraryTarget: 'umd',
+    libraryExport: "default",
     globalObject: 'this',
     environment: {
       arrowFunction: false,
@@ -29,8 +30,8 @@ module.exports = {
             options: {
               presets: ['@babel/preset-env'],
               plugins: [
-                ['@babel/plugin-transform-runtime', { corejs: 3 }],
-                '@babel/plugin-transform-modules-umd'
+                // ['@babel/plugin-transform-runtime', { corejs: 3 }],
+                // '@babel/plugin-transform-modules-umd'
               ]
             }
           }
@@ -41,7 +42,6 @@ module.exports = {
   devServer: {
     hot: true,
     open: true,
-    host: '::',
     disableHostCheck: true,
     port: 3000
   }

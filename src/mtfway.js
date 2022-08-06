@@ -1,7 +1,8 @@
 /** The algorithm used in this document is protected by patent */
-module.exports = class MTFWay {
+import './object.assign.polyfill'
+export default class MTFWay {
   constructor({ top, bottom, id }) {
-    Object.assign(this, {
+    Object.assign2(this, {
       _oid: 0,
       s: { p: [], o: [] },
       v: {
@@ -21,11 +22,15 @@ module.exports = class MTFWay {
   q(a, g, h) {
     for (let i = 0; i < a.length; i++) {
       const e = Math.min(a[i][0], a[i][1]),
-        f = Math.max(a[i][0], a[i][1])
+        f = Math.max(a[i][0], a[i][1]), c = []
       let m
       g[e] = 2
       g[f] = 1
-      const c = Object.entries(g)
+      for (var k in g) {
+				if(k>=e && k<=f){
+					c.push([k, g[k]]);
+				}
+			}
       if (c.length > 26) return false
       if (a[i][1] >= a[i][0]) {
         for (let j = 0, d; (d = c[j]), j < c.length; j++) {

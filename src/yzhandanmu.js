@@ -5,7 +5,7 @@ const swap = (a, i, j) => {
   a[i] = a[j]
   a[j] = t
 }
-module.exports = class YZhanDanMu {
+export default class YZhanDanMu {
   constructor({ p }) {
     if (p.id === void 0) p.id = 'yzhan_p_' + uid()
     if (p.offsetHeight === 0) p.style.height = 300 + 'px'
@@ -13,7 +13,7 @@ module.exports = class YZhanDanMu {
       top: 0,
       bottom: p.offsetHeight,
       id: p.id
-    })
+    });
     Object.assign(this, {
       p,
       mtfWay,
