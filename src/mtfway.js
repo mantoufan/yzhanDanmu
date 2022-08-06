@@ -2,7 +2,7 @@
 import './object.assign.polyfill'
 export default class MTFWay {
   constructor({ top, bottom, id }) {
-    Object.assign2(this, {
+    Object.assign(this, {
       _oid: 0,
       s: { p: [], o: [] },
       v: {
