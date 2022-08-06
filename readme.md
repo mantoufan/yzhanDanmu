@@ -1,7 +1,7 @@
 ## Y 站弹幕插件 Y station barrage plug-in
 
 ![npm](https://img.shields.io/npm/v/yzhandanmu)
-![npm bundle size](https://img.shields.io/bundlephobia/minzip/yzhandanmu)
+![npm bundle size (version)](https://img.shields.io/bundlephobia/minzip/yzhandanmu/latest)
 ![npm](https://img.shields.io/npm/dt/yzhandanmu)
 ![ie10+](https://img.shields.io/badge/IE-10%2B-skyblue)  
 Y 站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略  
