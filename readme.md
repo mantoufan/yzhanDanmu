@@ -2,10 +2,10 @@
 
 ![npm](https://img.shields.io/npm/v/yzhandanmu)
 ![npm bundle size](https://img.shields.io/bundlephobia/minzip/yzhandanmu)
-![npm](https://img.shields.io/npm/dt/yzhandanmu)  
+![npm](https://img.shields.io/npm/dt/yzhandanmu)
 ![ie10+](https://img.shields.io/badge/IE-10%2B-skyblue)  
 Y 站弹幕插件，适应任意高度、长度、速度弹幕，支持多种不重叠策略  
-CSS 3 动画，高效极简(2kB)，兼容绝大多数设备和 IE10+   
+CSS 3 动画，高效极简(**2kB**)，兼容绝大多数设备和 IE10+   
 Y station barrage plug-in, suitable for barrages of any height, length and speed  
 CSS 3 animation, 2kB size, compatible with most devices and IE10+
 
@@ -66,14 +66,22 @@ yZhanDanMu.destroy()
 
 ### Features 功能
 
-- Adapt to barrage at any height and length 弹幕高度、长度任意
-- Barrage can be displayed at a fixed time or at a fixed speed (uniform speed) 弹幕可以固定时间或固定速度（匀速）显示
-- When the barrage is full, multiple priority strategies can be added to the new barrage 弹幕全满时，新弹幕添加可选多种优先策略
-  - time - Barrage will appear on time, even if it overlaps 时间优先：弹幕将准时出现，即使会重叠
-  - nooverlap - Barrage will be delayed until a space is available 不重叠优先：弹幕将延迟出现，直到找到空位
-  - nooverlap-highest - Barrage will be delayed until a space is available as soon as possible 不重叠优先之最高优先级：弹幕将延迟出现，直到找到空位，并且会尽快
-- Automatic power saving 自动省电
-  - On devices that support automatic power saving, when the current window is not active, slow down or stop running 支持自动省电的设备上，当前窗口不活跃时，降速或停止运行
+- Adapt to barrage at any height and length  
+弹幕高度、长度任意
+- Barrage can be displayed at a fixed time or at a fixed speed (uniform speed)  
+弹幕可以固定时间或固定速度（匀速）显示
+- When the barrage is full, multiple priority strategies can be added to the new barrage  
+弹幕全满时，新弹幕添加可选多种优先策略
+  - time - Barrage will appear on time, even if it overlaps  
+  时间优先：弹幕将准时出现，即使会重叠
+  - nooverlap - Barrage will be delayed until a space is available  
+  不重叠优先：弹幕将延迟出现，直到找到空位
+  - nooverlap-highest - Barrage will be delayed until a space is available as soon as possible  
+  不重叠优先之最高优先级：弹幕将延迟出现，直到找到空位，并且会尽快
+- Automatic power saving  
+自动省电
+  - On devices that support automatic power saving, when the current window is not active, slow down or stop running  
+  支持自动省电的设备上，当前窗口不活跃时，降速或停止运行
 
 ### Patent Right 专利权
 
